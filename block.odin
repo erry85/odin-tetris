@@ -216,7 +216,7 @@ block_init :: proc(b: ^Block, type: BlockType) {
 
 block_destroy :: proc(b: ^Block) {
 	for _, pos in b.cells {
-		delete_dynamic_array(pos)
+		delete(pos)
 	}
 	delete(b.cells)
 }
@@ -242,7 +242,7 @@ block_move :: proc(b: ^Block, rows: i32, cols: i32) {
 block_getCellPosition :: proc(b: Block) -> [dynamic]Position {
 	tiles: [dynamic]Position = b.cells[b.rotationState]
 	movedTiles: [dynamic]Position
-	defer delete_dynamic_array(movedTiles)
+	defer delete(movedTiles)
 
 	for tile in tiles {
 		newPos: Position = {

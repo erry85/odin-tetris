@@ -42,8 +42,7 @@ game_init :: proc(g: ^Game) {
 }
 
 game_initBlocks :: proc(g: ^Game) {
-	delete_dynamic_array(g.blocks)
-	g.blocks = {g.IBlock, g.JBlock, g.LBlock, g.OBlock, g.SBlock, g.TBlock, g.ZBlock}
+	append(&g.blocks, g.IBlock, g.JBlock, g.LBlock, g.OBlock, g.SBlock, g.TBlock, g.ZBlock)
 }
 
 game_destroyBlocks :: proc(g: ^Game) {
