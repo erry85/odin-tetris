@@ -80,7 +80,7 @@ game_draw :: proc(g: ^Game) {
 	}
 }
 
-game_isBlockOutside :: proc(g: ^Game) -> bool {
+game_isBlockOutside :: proc(g: Game) -> bool {
 	tiles: [dynamic]Position = block_getCellPosition(g.currBlock)
 	for tile in tiles {
 		if grid_isCellOutside(g.grid, tile.row, tile.col) {
@@ -115,7 +115,7 @@ game_handleInput :: proc(g: ^Game) {
 game_moveBlockLeft :: proc(g: ^Game) {
 	if !g.gameOver {
 		block_move(&g.currBlock, 0, -1)
-		if game_isBlockOutside(g) || !game_blockFits(g^) {
+		if game_isBlockOutside(g^) || !game_blockFits(g^) {
 			block_move(&g.currBlock, 0, 1)
 		}
 	}
@@ -124,7 +124,7 @@ game_moveBlockLeft :: proc(g: ^Game) {
 game_moveBlockRight :: proc(g: ^Game) {
 	if !g.gameOver {
 		block_move(&g.currBlock, 0, 1)
-		if game_isBlockOutside(g) || !game_blockFits(g^) {
+		if game_isBlockOutside(g^) || !game_blockFits(g^) {
 			block_move(&g.currBlock, 0, -1)
 		}
 	}
@@ -133,7 +133,7 @@ game_moveBlockRight :: proc(g: ^Game) {
 game_moveBlockDown :: proc(g: ^Game) {
 	if !g.gameOver {
 		block_move(&g.currBlock, 1, 0)
-		if game_isBlockOutside(g) || !game_blockFits(g^) {
+		if game_isBlockOutside(g^) || !game_blockFits(g^) {
 			block_move(&g.currBlock, -1, 0)
 			game_lockBlock(g)
 		}
@@ -143,7 +143,7 @@ game_moveBlockDown :: proc(g: ^Game) {
 game_rotateBlock :: proc(g: ^Game) {
 	if !g.gameOver {
 		block_rotate(&g.currBlock)
-		if game_isBlockOutside(g) || !game_blockFits(g^) {
+		if game_isBlockOutside(g^) || !game_blockFits(g^) {
 			block_undoRotation(&g.currBlock)
 		} else {
 			rl.PlaySound(g.rotateSound)
