@@ -113,11 +113,11 @@ grid_moveRowDown :: proc(g: ^Grid, row: i32, numRows: i32) {
 grid_clearFullRows :: proc(g: ^Grid) -> i32 {
 	completed: i32 = 0
 	for row := g.numRows - 1; row >= 0; row -= 1 {
-		if grid_isRowFull(g^, row) {
-			grid_clearRow(g, row)
+		if g->isRowFull(row) {
+			g->clearRow(row)
 			completed += 1
 		} else if completed > 0 {
-			grid_moveRowDown(g, row, completed)
+			g->moveRowDown(row, completed)
 		}
 	}
 	return completed
