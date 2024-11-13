@@ -1,6 +1,7 @@
 package game
 
 import "core:fmt"
+// import "core:mem"
 
 import rl "vendor:raylib"
 
@@ -47,15 +48,14 @@ main :: proc() {
 	font: rl.Font = rl.LoadFontEx("assets/font/monogram.ttf", 64, nil, 0)
 	defer rl.UnloadFont(font)
 
-	game: Game
-	game_init(&game)
-	defer game_destroy(&game)
+	game := create_game()
+	defer game->destroy()
 
 	for !rl.WindowShouldClose() {
 		rl.UpdateMusicStream(game.music)
-		game_handleInput(&game)
+		game->handleInput()
 		if EventTrigger(0.2) {
-			game_moveBlockDown(&game)
+			game->moveBlockDown()
 		}
 		rl.BeginDrawing()
 		rl.ClearBackground(gridColorsVector[.darkBlue])
@@ -71,7 +71,7 @@ main :: proc() {
 		rl.DrawRectangleRounded({320, 55, 170, 60}, 0.3, 6, gridColorsVector[.lightBlue])
 		rl.DrawTextEx(font, scoreText, {320 + (170 - scoreTextSize.x) / 2, 65}, 38, 2, rl.WHITE)
 		rl.DrawRectangleRounded({320, 215, 170, 180}, 0.3, 6, gridColorsVector[.lightBlue])
-		game_draw(&game)
+		game->draw()
 		rl.EndDrawing()
 	}
 }
